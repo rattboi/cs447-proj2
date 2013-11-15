@@ -22,9 +22,9 @@ GenericException::operator=(const GenericException& e)
 {
     if ( this != &e )
     {
-    delete message;
-    message = new char[strlen(e.message)+4];
-    strcpy(message, e.message);
+	delete message;
+	message = new char[strlen(e.message)+4];
+	strcpy(message, e.message);
     }
 
     return *this;
