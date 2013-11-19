@@ -13,17 +13,17 @@
 
 class Track {
   private:
-    GLubyte 	    track_list;	    // The display list for the track.
-    GLubyte 	    train_list;	    // The display list for the train.
-    bool    	    initialized;    // Whether or not we have been initialized.
-    CubicBspline    *track;	    // The spline that defines the track.
-    float	    posn_on_track;  // The train's parametric position on the
-				    // track.
-    float	    speed;	    // The train's speed, in world coordinates
+    GLubyte         track_list;     // The display list for the track.
+    GLubyte         train_list;     // The display list for the train.
+    bool            initialized;    // Whether or not we have been initialized.
+    CubicBspline    *track;         // The spline that defines the track.
+    float           posn_on_track;  // The train's parametric position on the
+                                    // track.
+    float           speed;          // The train's speed, in world coordinates
 
-    static const int	TRACK_NUM_CONTROLS;	// Constants about the track.
-    static const float 	TRACK_CONTROLS[][3];
-    static const float 	TRAIN_ENERGY;
+    static const int    TRACK_NUM_CONTROLS;     // Constants about the track.
+    static const float  TRACK_CONTROLS[][3];
+    static const float  TRAIN_ENERGY;
 
   public:
     // Constructor
@@ -32,9 +32,9 @@ class Track {
     // Destructor
     ~Track(void);
 
-    bool    Initialize(void);	// Gets everything set up for drawing.
-    void    Update(float);	// Updates the location of the train
-    void    Draw(void);		// Draws everything.
+    bool    Initialize(void);   // Gets everything set up for drawing.
+    void    Update(float);      // Updates the location of the train
+    void    Draw(void);         // Draws everything.
 };
 
 

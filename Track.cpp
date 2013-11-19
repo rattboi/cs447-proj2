@@ -13,8 +13,8 @@
 // The control points for the track spline.
 const int   Track::TRACK_NUM_CONTROLS = 4;
 const float Track::TRACK_CONTROLS[TRACK_NUM_CONTROLS][3] =
-		{ { -20.0, -20.0, -18.0 }, { 20.0, -20.0, 40.0 },
-		  { 20.0, 20.0, -18.0 }, { -20.0, 20.0, 40.0 } };
+                { { -20.0, -20.0, -18.0 }, { 20.0, -20.0, 40.0 },
+                  { 20.0, 20.0, -18.0 }, { -20.0, 20.0, 40.0 } };
 
 // The carriage energy and mass
 const float Track::TRAIN_ENERGY = 250.0f;
@@ -27,7 +27,7 @@ Normalize_3(float v[3])
     double  l = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 
     if ( l == 0.0 )
-	return;
+        return;
 
     v[0] /= (float)l;
     v[1] /= (float)l;
@@ -40,8 +40,8 @@ Track::~Track(void)
 {
     if ( initialized )
     {
-	glDeleteLists(track_list, 1);
-	glDeleteLists(train_list, 1);
+        glDeleteLists(track_list, 1);
+        glDeleteLists(train_list, 1);
     }
 }
 
@@ -51,14 +51,14 @@ bool
 Track::Initialize(void)
 {
     CubicBspline    refined(3, true);
-    int		    n_refined;
-    float	    p[3];
-    int		    i;
+    int             n_refined;
+    float           p[3];
+    int             i;
 
     // Create the track spline.
     track = new CubicBspline(3, true);
     for ( i = 0 ; i < TRACK_NUM_CONTROLS ; i++ )
-	track->Append_Control(TRACK_CONTROLS[i]);
+        track->Append_Control(TRACK_CONTROLS[i]);
 
     // Refine it down to a fixed tolerance. This means that any point on
     // the track that is drawn will be less than 0.1 units from its true
@@ -71,14 +71,14 @@ Track::Initialize(void)
     // subdivision has made sure that these are good enough.
     track_list = glGenLists(1);
     glNewList(track_list, GL_COMPILE);
-	glColor3f(1.0f, 1.0, 1.0f);
-	glBegin(GL_LINE_STRIP);
-	    for ( i = 0 ; i <= n_refined ; i++ )
-	    {
-		refined.Evaluate_Point((float)i, p);
-		glVertex3fv(p);
-	    }
-	glEnd();
+        glColor3f(1.0f, 1.0, 1.0f);
+        glBegin(GL_LINE_STRIP);
+            for ( i = 0 ; i <= n_refined ; i++ )
+            {
+                refined.Evaluate_Point((float)i, p);
+                glVertex3fv(p);
+            }
+        glEnd();
     glEndList();
 
     // Set up the train. At this point a cube is drawn. NOTE: The
@@ -88,41 +88,41 @@ Track::Initialize(void)
     glNewList(train_list, GL_COMPILE);
     glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_QUADS);
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.5f, 0.5f, 1.0f);
-	glVertex3f(-0.5f, 0.5f, 1.0f);
-	glVertex3f(-0.5f, -0.5f, 1.0f);
-	glVertex3f(0.5f, -0.5f, 1.0f);
+        glNormal3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(0.5f, 0.5f, 1.0f);
+        glVertex3f(-0.5f, 0.5f, 1.0f);
+        glVertex3f(-0.5f, -0.5f, 1.0f);
+        glVertex3f(0.5f, -0.5f, 1.0f);
 
-	glNormal3f(0.0f, 0.0f, -1.0f);
-	glVertex3f(0.5f, -0.5f, 0.0f);
-	glVertex3f(-0.5f, -0.5f, 0.0f);
-	glVertex3f(-0.5f, 0.5f, 0.0f);
-	glVertex3f(0.5f, 0.5f, 0.0f);
+        glNormal3f(0.0f, 0.0f, -1.0f);
+        glVertex3f(0.5f, -0.5f, 0.0f);
+        glVertex3f(-0.5f, -0.5f, 0.0f);
+        glVertex3f(-0.5f, 0.5f, 0.0f);
+        glVertex3f(0.5f, 0.5f, 0.0f);
 
-	glNormal3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(0.5f, 0.5f, 0.0f);
-	glVertex3f(0.5f, 0.5f, 1.0f);
-	glVertex3f(0.5f, -0.5f, 1.0f);
-	glVertex3f(0.5f, -0.5f, 0.0f);
+        glNormal3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(0.5f, 0.5f, 0.0f);
+        glVertex3f(0.5f, 0.5f, 1.0f);
+        glVertex3f(0.5f, -0.5f, 1.0f);
+        glVertex3f(0.5f, -0.5f, 0.0f);
 
-	glNormal3f(-1.0f, 0.0f, 0.0f);
-	glVertex3f(-0.5f, 0.5f, 1.0f);
-	glVertex3f(-0.5f, 0.5f, 0.0f);
-	glVertex3f(-0.5f, -0.5f, 0.0f);
-	glVertex3f(-0.5f, -0.5f, 1.0f);
+        glNormal3f(-1.0f, 0.0f, 0.0f);
+        glVertex3f(-0.5f, 0.5f, 1.0f);
+        glVertex3f(-0.5f, 0.5f, 0.0f);
+        glVertex3f(-0.5f, -0.5f, 0.0f);
+        glVertex3f(-0.5f, -0.5f, 1.0f);
 
-	glNormal3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(0.5f, 0.5f, 1.0f);
-	glVertex3f(0.5f, 0.5f, 0.0f);
-	glVertex3f(-0.5f, 0.5f, 0.0f);
-	glVertex3f(-0.5f, 0.5f, 1.0f);
+        glNormal3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(0.5f, 0.5f, 1.0f);
+        glVertex3f(0.5f, 0.5f, 0.0f);
+        glVertex3f(-0.5f, 0.5f, 0.0f);
+        glVertex3f(-0.5f, 0.5f, 1.0f);
 
-	glNormal3f(0.0f, -1.0f, 0.0f);
-	glVertex3f(0.5f, -0.5f, 0.0f);
-	glVertex3f(0.5f, -0.5f, 1.0f);
-	glVertex3f(-0.5f, -0.5f, 1.0f);
-	glVertex3f(-0.5f, -0.5f, 0.0f);
+        glNormal3f(0.0f, -1.0f, 0.0f);
+        glVertex3f(0.5f, -0.5f, 0.0f);
+        glVertex3f(0.5f, -0.5f, 1.0f);
+        glVertex3f(-0.5f, -0.5f, 1.0f);
+        glVertex3f(-0.5f, -0.5f, 0.0f);
     glEnd();
     glEndList();
 
@@ -141,7 +141,7 @@ Track::Draw(void)
     double  angle;
 
     if ( ! initialized )
-	return;
+        return;
 
     glPushMatrix();
 
@@ -185,7 +185,7 @@ Track::Update(float dt)
     double  parametric_speed;
 
     if ( ! initialized )
-	return;
+        return;
 
     // First we move the train along the track with its current speed.
 
@@ -195,7 +195,7 @@ Track::Update(float dt)
     // Get its length.
     length = sqrt(deriv[0]*deriv[0] + deriv[1]*deriv[1] + deriv[2]*deriv[2]);
     if ( length == 0.0 )
-	return;
+        return;
 
     // The parametric speed is the world train speed divided by the length
     // of the tangent vector.
@@ -206,16 +206,16 @@ Track::Update(float dt)
 
     // If we've just gone around the track, reset back to the start.
     if ( posn_on_track > track->N() )
-	posn_on_track -= track->N();
+        posn_on_track -= track->N();
 
     // As the second step, we use conservation of energy to set the speed
     // for the next time.
     // The total energy = z * gravity + 1/2 speed * speed, assuming unit mass
     track->Evaluate_Point(posn_on_track, point);
     if ( TRAIN_ENERGY - 9.81 * point[2] < 0.0 )
-	speed = 0.0;
+        speed = 0.0;
     else
-	speed = (float)sqrt(2.0 * ( TRAIN_ENERGY - 9.81 * point[2] ));
+        speed = (float)sqrt(2.0 * ( TRAIN_ENERGY - 9.81 * point[2] ));
 }
 
 

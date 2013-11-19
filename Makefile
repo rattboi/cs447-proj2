@@ -1,5 +1,5 @@
 INCLUDE =
-LIB = -L/usr/X11R6/lib -L.
+LIB = -L/usr/X11R6/lib 
 
 LINK = -lfltk -lfltk_gl -lX11 -lXext -lGL -lGLU
 

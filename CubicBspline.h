@@ -12,19 +12,19 @@
 
 class CubicBspline {
   private:
-    unsigned short  d;		/* The dimension of each point on the curve. */
-    unsigned short  n;		/* The number of control points. */
-    float   	    **c_pts;	/* The control points. */
-    bool	    loop;	/* Whether the curve loops or not. */
+    unsigned short  d;          /* The dimension of each point on the curve. */
+    unsigned short  n;          /* The number of control points. */
+    float           **c_pts;    /* The control points. */
+    bool            loop;       /* Whether the curve loops or not. */
 
   public:
     /* Initializes with the given dimension and no control points. */
     CubicBspline(const unsigned short dim = 3, const bool l = true)
-	{ d = dim; n = 0; c_pts = NULL; loop = l; };
+        { d = dim; n = 0; c_pts = NULL; loop = l; };
 
     /* Initializes with the given dimension and control points. */
     CubicBspline(const unsigned short, const unsigned short, float**,
-		 const bool);
+                 const bool);
 
     /* Destructor. */
     ~CubicBspline(void);
@@ -33,17 +33,17 @@ class CubicBspline {
     CubicBspline& operator=(const CubicBspline&);
 
     /* Query the dimension. */
-    unsigned short	D(void) { return d; };
+    unsigned short      D(void) { return d; };
 
     /* Query the number of control points. */
-    unsigned short	N(void) { return n; };
+    unsigned short      N(void) { return n; };
 
     /* Query a control point, putting the value into the given array.
     ** Throws an exception if the index is out of range. */
-    void		C(unsigned short, float*);
+    void                C(unsigned short, float*);
 
     /* Query whether the curve is a loop. */
-    bool		Loop(void) { return loop; }
+    bool                Loop(void) { return loop; }
 
     /* Change a control point at the given position.
     ** Will throw an exception if the position is out of range. */
