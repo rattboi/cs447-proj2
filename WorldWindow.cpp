@@ -12,6 +12,7 @@
 #include <FL/gl.h>
 #include <GL/glu.h>
 #include <stdio.h>
+#include <time.h>
 
 const double WorldWindow::FOV_X = 45.0;
 
@@ -25,10 +26,20 @@ WorldWindow::WorldWindow(int x, int y, int width, int height, char *label)
     theta = 0.0f;
     dist = 100.0f;
     x_at = 0.0f;
-    y_at = 0.0f;
+    y_at = 0.0f; 
 
+    srand(time(NULL));
+
+    // Make some motherfucking trees!
+    for (int i = 0; i < NUM_TREES; i++)
+        trees[i] = new Tree(5.0+(rand() % 10), 1+(rand() % 3), -30.0f + (rand() % 60), -30.0f + (rand() % 60), 0.0f);
 }
 
+WorldWindow::~WorldWindow(void)
+{
+    for (int i = 0; i < NUM_TREES; i++)
+        delete trees[i];
+}
 
 void
 WorldWindow::draw(void)
@@ -86,6 +97,9 @@ WorldWindow::draw(void)
         // Initialize all the objects.
         ground.Initialize();
         traintrack.Initialize();
+
+        for (int i = 0; i < NUM_TREES; i++)
+            trees[i]->Initialize();
     }
 
     // Stuff out here relies on a coordinate system or must be done on every
@@ -113,6 +127,9 @@ WorldWindow::draw(void)
     // Draw stuff. Everything.
     ground.Draw();
     traintrack.Draw();
+
+    for (int i = 0; i < NUM_TREES; i++)
+        trees[i]->Draw();
 }
 
 

@@ -15,13 +15,18 @@
 #include <FL/Fl_Gl_Window.H>
 #include "Ground.h"
 #include "Track.h"
+#include "Tree.h"
 
+#define NUM_TREES 100
 
 // Subclass the Fl_Gl_Window because we want to draw OpenGL in here.
 class WorldWindow : public Fl_Gl_Window {
     public:
         // Constructor takes window position and dimensions, the title.
         WorldWindow(int x, int y, int w, int h, char *label);
+        
+        // Deconstructor
+        ~WorldWindow(void);
 
         // draw() method invoked whenever the view changes or the window
         // otherwise needs to be redrawn.
@@ -37,6 +42,7 @@ class WorldWindow : public Fl_Gl_Window {
     private:
         Ground      ground;         // The ground object.
         Track  traintrack;          // The train and track.
+        Tree        *trees[NUM_TREES];
 
         static const double FOV_X; // The horizontal field of view.
 

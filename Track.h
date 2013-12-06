@@ -21,6 +21,8 @@ class Track {
                                     // track.
     float           speed;          // The train's speed, in world coordinates
 
+    GLuint          texture_obj;    // The object for the grass texture.
+
     static const int    TRACK_NUM_CONTROLS;     // Constants about the track.
     static const float  TRACK_CONTROLS[][3];
     static const float  TRAIN_ENERGY;

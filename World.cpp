@@ -8,6 +8,7 @@
 #include <FL/Fl.H>
 #include "WorldWindow.h"
 #include <stdio.h>
+#include <GL/glut.h>
 
 
 // The time per frame, in seconds (enforced only by timeouts.)
@@ -36,6 +37,8 @@ int
 main(int argc, char *argv[])
 {
     Fl::visual(FL_RGB);
+
+    glutInit(&argc, argv);
 
     world_window = new WorldWindow(100, 100, 800, 600, (char *) "World");
 
