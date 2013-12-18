@@ -20,6 +20,7 @@ Merry::~Merry(void)
     if ( initialized )
     {
         glDeleteLists(display_list[0], 1);
+        glDeleteLists(display_list[1], 1);
         gluDeleteQuadric(qobj[0]);
         gluDeleteQuadric(qobj[1]);
     }
@@ -39,9 +40,9 @@ Merry::Initialize(void)
     display_list[0] = glGenLists(1);
     glNewList(display_list[0], GL_COMPILE);
         glColor3f(0.54, 0.27, 0.07);
-        gluCylinder(qobj[0], 5, 5, 2, 10, 16);
+        gluCylinder(qobj[0], 5, 5, 2, 20, 16);
         glTranslatef(0.0, 0.0, 2);
-        gluDisk(qobj[1],2,5,10,10);
+        gluDisk(qobj[1],2,5,20,20);
     glEndList();
 
     display_list[1] = glGenLists(1);

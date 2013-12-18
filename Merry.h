@@ -13,7 +13,7 @@
 
 class Merry{
   private:
-    GLubyte     display_list[5];   // The display list that does all the work.
+    GLubyte     display_list[2];   // The display list that does all the work.
     float       posn[3];
     GLUquadric  *qobj[2];
     bool        initialized;    // Whether or not we have been initialised.
@@ -25,7 +25,7 @@ class Merry{
     // created before the OpenGL context is set up.
     Merry(void) { for (int i = 0; i < 5; i++) display_list[i] = 0; initialized = false; posn[0] = posn[1] = posn[2] = 0.0f; };
     Merry(float x, float y, float z) { 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 2; i++)
             display_list[i] = 0; 
         initialized = false; 
         posn[0] = x;
