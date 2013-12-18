@@ -3,7 +3,7 @@ LIB = -L/usr/X11R6/lib
 
 LINK = -lfltk -lfltk_gl -lX11 -lXext -lGL -lGLU -lglut
 
-OBJ = CubicBspline.o GenericException.o Ground.o Track.o World.o WorldWindow.o libtarga.o Tree.o
+OBJ = CubicBspline.o GenericException.o Ground.o Track.o World.o WorldWindow.o libtarga.o Tree.o Merry.o
 
 Project2: $(OBJ)
 	g++ -ggdb -Wall -o Project2 $(OBJ) $(INCLUDE) $(LINK) $(LIB)

@@ -32,7 +32,7 @@ WorldWindow::WorldWindow(int x, int y, int width, int height, char *label)
 
     // Make some motherfucking trees!
     for (int i = 0; i < NUM_TREES; i++)
-        trees[i] = new Tree(5.0+(rand() % 10), 1+(rand() % 3), -30.0f + (rand() % 60), -30.0f + (rand() % 60), 0.0f);
+        trees[i] = new Tree(5.0+(rand() % 10), 1+(rand() % 3), -50.0f + (rand() % 100), -50.0f + (rand() % 40), 0.0f);
 }
 
 WorldWindow::~WorldWindow(void)
@@ -97,6 +97,7 @@ WorldWindow::draw(void)
         // Initialize all the objects.
         ground.Initialize();
         traintrack.Initialize();
+        merry.Initialize();
 
         for (int i = 0; i < NUM_TREES; i++)
             trees[i]->Initialize();
@@ -130,6 +131,8 @@ WorldWindow::draw(void)
 
     for (int i = 0; i < NUM_TREES; i++)
         trees[i]->Draw();
+
+    merry.Draw();
 }
 
 
@@ -192,6 +195,7 @@ WorldWindow::Update(float dt)
 
     // Animate the train.
     traintrack.Update(dt);
+    merry.Update(dt);
 
     return true;
 }

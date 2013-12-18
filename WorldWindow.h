@@ -16,6 +16,7 @@
 #include "Ground.h"
 #include "Track.h"
 #include "Tree.h"
+#include "Merry.h"
 
 #define NUM_TREES 100
 
@@ -41,8 +42,9 @@ class WorldWindow : public Fl_Gl_Window {
 
     private:
         Ground      ground;         // The ground object.
-        Track  traintrack;          // The train and track.
+        Track       traintrack;          // The train and track.
         Tree        *trees[NUM_TREES];
+        Merry       merry;
 
         static const double FOV_X; // The horizontal field of view.
 
