@@ -47,7 +47,7 @@ Merry::Initialize(void)
 
     display_list[1] = glGenLists(1);
     glNewList(display_list[1], GL_COMPILE);
-        glColor3f(0, 1, 0);
+        glColor3f(0, 0, 1);
         glRotated(90,1,0,0);
         glutSolidTeapot(1.5f);
     glEndList();

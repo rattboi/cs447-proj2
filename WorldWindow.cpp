@@ -12,7 +12,10 @@
 #include <FL/gl.h>
 #include <GL/glu.h>
 #include <stdio.h>
+#include <iostream>
 #include <time.h>
+
+using namespace std;
 
 const double WorldWindow::FOV_X = 45.0;
 
@@ -26,7 +29,7 @@ WorldWindow::WorldWindow(int x, int y, int width, int height, char *label)
     theta = 0.0f;
     dist = 100.0f;
     x_at = 0.0f;
-    y_at = 0.0f; 
+    y_at = 0.0f;
 
     srand(time(NULL));
 
@@ -225,6 +228,19 @@ WorldWindow::handle(int event)
         return 1;
       case FL_RELEASE:
         button = -1;
+        return 1;
+      case FL_KEYDOWN:
+        key = Fl::event_key();
+        if (key == FL_Escape)
+            return Fl_Gl_Window::handle(event);
+        cout << key << " Pressed" << endl;
+        return 1;
+      case FL_KEYUP:
+        cout << Fl::event_key() << " Released" << endl;
+        return 1;
+      case FL_FOCUS:
+        return 1;
+      case FL_UNFOCUS:
         return 1;
     }
 
