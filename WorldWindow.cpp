@@ -19,6 +19,20 @@ using namespace std;
 
 const double WorldWindow::FOV_X = 45.0;
 
+// Normalize a 3d vector.
+static void
+Normalize_3(float v[3])
+{
+    double  l = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+
+    if ( l == 0.0 )
+        return;
+
+    v[0] /= (float)l;
+    v[1] /= (float)l;
+    v[2] /= (float)l;
+}
+
 WorldWindow::WorldWindow(int x, int y, int width, int height, char *label)
         : Fl_Gl_Window(x, y, width, height, label)
 {
@@ -133,13 +147,29 @@ WorldWindow::draw(void)
         // by two angles. They are looking at (x_at, y_ay, 2.0) and z is up.
         float posn[3];
         float deriv[3];
+        int mult = 8;
 
         traintrack.getPosition(posn);
         traintrack.getVelocity(deriv);
 
+        if (cameraMode == 2)
+        {
+            mult = 8;
+            Normalize_3(deriv);
+        }
+        else
+        {
+            mult = 1;
+        }
+
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        gluLookAt(posn[0] - deriv[0], posn[1] - deriv[1], posn[2] - deriv[2], posn[0] + deriv[0], posn[1] + deriv[1], posn[2] + deriv[2], 0.0, 0.0, 1.0);
+        gluLookAt(posn[0] - (mult * deriv[0]),
+                  posn[1] - (mult * deriv[1]),
+                  posn[2] - (mult * deriv[2]),
+                  posn[0] + deriv[0],
+                  posn[1] + deriv[1],
+                  posn[2] + deriv[2], 0.0, 0.0, 1.0);
     }
 
     // Position the light source. This has to happen after the viewing
@@ -253,11 +283,15 @@ WorldWindow::handle(int event)
         if (key == FL_Escape)
             return Fl_Gl_Window::handle(event);
         if (key == 97) // A Key
-            cameraMode ^= 1;
-        cout << key << " Pressed" << endl;
+        {
+            cameraMode++;
+            if (cameraMode > 2)
+                cameraMode = 0;
+        }
+//        cout << key << " Pressed" << endl;
         return 1;
       case FL_KEYUP:
-        cout << Fl::event_key() << " Released" << endl;
+//        cout << Fl::event_key() << " Released" << endl;
         return 1;
       case FL_FOCUS:
         return 1;
