@@ -57,6 +57,7 @@ class WorldWindow : public Fl_Gl_Window {
         // Adding keyboard support for camera follows coaster mode
         int     key;        
         int     key_last;        
+        int     cameraMode;
 
         int     button; // The mouse button that is down, -1 if none.
         int     x_last; // The location of the most recent mouse event

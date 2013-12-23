@@ -23,6 +23,7 @@ WorldWindow::WorldWindow(int x, int y, int width, int height, char *label)
         : Fl_Gl_Window(x, y, width, height, label)
 {
     button = -1;
+    cameraMode = 0;
 
     // Initial viewing parameters.
     phi = 45.0f;
@@ -112,15 +113,34 @@ WorldWindow::draw(void)
     // Clear the screen. Color and depth.
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-    // Set up the viewing transformation. The viewer is at a distance
-    // dist from (x_at, y_ay, 2.0) in the direction (theta, phi) defined
-    // by two angles. They are looking at (x_at, y_ay, 2.0) and z is up.
-    eye[0] = x_at + dist * cos(theta * M_PI / 180.0) * cos(phi * M_PI / 180.0);
-    eye[1] = y_at + dist * sin(theta * M_PI / 180.0) * cos(phi * M_PI / 180.0);
-    eye[2] = 2.0 + dist * sin(phi * M_PI / 180.0);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt(eye[0], eye[1], eye[2], x_at, y_at, 2.0, 0.0, 0.0, 1.0);
+    if (cameraMode == 0)
+    {
+
+        // Set up the viewing transformation. The viewer is at a distance
+        // dist from (x_at, y_ay, 2.0) in the direction (theta, phi) defined
+        // by two angles. They are looking at (x_at, y_ay, 2.0) and z is up.
+        eye[0] = x_at + dist * cos(theta * M_PI / 180.0) * cos(phi * M_PI / 180.0);
+        eye[1] = y_at + dist * sin(theta * M_PI / 180.0) * cos(phi * M_PI / 180.0);
+        eye[2] = 2.0 + dist * sin(phi * M_PI / 180.0);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        gluLookAt(eye[0], eye[1], eye[2], x_at, y_at, 2.0, 0.0, 0.0, 1.0);
+    }
+    else
+    {
+        // Set up the viewing transformation. The viewer is at a distance
+        // dist from (x_at, y_ay, 2.0) in the direction (theta, phi) defined
+        // by two angles. They are looking at (x_at, y_ay, 2.0) and z is up.
+        float posn[3];
+        float deriv[3];
+
+        traintrack.getPosition(posn);
+        traintrack.getVelocity(deriv);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        gluLookAt(posn[0] - deriv[0], posn[1] - deriv[1], posn[2] - deriv[2], posn[0] + deriv[0], posn[1] + deriv[1], posn[2] + deriv[2], 0.0, 0.0, 1.0);
+    }
 
     // Position the light source. This has to happen after the viewing
     // transformation is set up, so that the light stays fixed in world
@@ -203,7 +223,6 @@ WorldWindow::Update(float dt)
     return true;
 }
 
-
 int
 WorldWindow::handle(int event)
 {
@@ -233,6 +252,8 @@ WorldWindow::handle(int event)
         key = Fl::event_key();
         if (key == FL_Escape)
             return Fl_Gl_Window::handle(event);
+        if (key == 97) // A Key
+            cameraMode ^= 1;
         cout << key << " Pressed" << endl;
         return 1;
       case FL_KEYUP:

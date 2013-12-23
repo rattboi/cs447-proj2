@@ -37,6 +37,8 @@ class Track {
     bool    Initialize(void);   // Gets everything set up for drawing.
     void    Update(float);      // Updates the location of the train
     void    Draw(void);         // Draws everything.
+    void    getPosition(float posn[3]);  // Get position of train
+    void    getVelocity(float posn[3]);  // Get velocity of train
 };
 
 

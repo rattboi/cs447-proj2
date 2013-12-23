@@ -109,7 +109,7 @@ Track::Initialize(void)
     // mipmaps from the image data, then it sets the filtering parameters
     // and the wrapping parameters. We want the grass to be repeated over the
     // ground.
-    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height, 
+    gluBuild2DMipmaps(GL_TEXTURE_2D,3, image_width, image_height,
                       GL_RGB, GL_UNSIGNED_BYTE, image_data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -119,7 +119,7 @@ Track::Initialize(void)
 
     // This says what to do with the texture. Modulate will multiply the
     // texture by the underlying color.
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); 
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
     // Set up the train. At this point a cube is drawn. NOTE: The
     // x-axis will be aligned to point along the track. The origin of the
@@ -289,4 +289,12 @@ Track::Update(float dt)
         speed = (float)sqrt(2.0 * ( TRAIN_ENERGY - 9.81 * point[2] ));
 }
 
+void Track::getPosition(float posn[3])
+{
+    track->Evaluate_Point(posn_on_track, posn);
+}
 
+void Track::getVelocity(float deriv[3])
+{
+    track->Evaluate_Derivative(posn_on_track, deriv);
+}
